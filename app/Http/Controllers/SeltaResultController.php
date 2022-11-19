@@ -17,12 +17,7 @@ class SeltaResultController extends Controller
      */
     public function index()
     {
-        $results = InterviewResult::all();
-        foreach ($results as $result)
-        {
-            $result->interview;
-            $result->course;
-        }
+        $results = InterviewResult::with(['interview','course'])->get();
         return response()->json($results);
     }
 
@@ -157,17 +152,12 @@ class SeltaResultController extends Controller
      */
     public function getSeltaResultByLeadId($id)
     {
-        $interviews =Interview::where([
+        $interviews =Interview::with(['interviewResults'=>function($q){
+            $q->with(['course','interviewFile']);
+        }])->where([
             ['lead_id',$id],
             ['selta',1],
-            ])->first();
-
-        $interviews->interviewResults;
-        foreach ($interviews->interviewResults as $result)
-        {
-            $result->course;
-            $result->interviewFile;
-        }
+        ])->first();
 
         return response()->json($interviews);
     }

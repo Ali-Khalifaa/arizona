@@ -56,7 +56,7 @@ class Accountantcontroller extends Controller
      */
     public function getAccountantLead()
     {
-        $leads = Lead::with(['country','city','interestingLevel','leadSources','dealIndividualPlacementTest','dealInterview'])
+        $leads = Lead::with(['city','educationLevel','specialty','university','interestingLevel','leadSources','dealIndividualPlacementTest','dealInterview'])
             ->where([
                 ['add_placement',1],
                 ['is_client',0],

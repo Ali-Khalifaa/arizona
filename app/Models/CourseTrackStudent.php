@@ -63,7 +63,7 @@ class CourseTrackStudent extends Model
 
     public function courseTrackStudentRecommended(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(CourseTrackStudentRecommended::class);
+        return $this->hasMany(CourseTrackStudentRecommended::class,'course_track_student_id');
     }
 
     public function traineesAttendanceCourse(): \Illuminate\Database\Eloquent\Relations\HasMany

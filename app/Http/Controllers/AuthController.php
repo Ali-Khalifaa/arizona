@@ -204,11 +204,9 @@ class AuthController extends Controller
             $student = Lead::where('user_id', '=' ,$id)->first();
             $token = response()->json(auth()->user());
             $data['lead_id']=$student->id;
-            $data['first_name']=$student->first_name;
-            $data['middle_name']=$student->middle_name;
-            $data['last_name']=$student->last_name;
+            $data['english_name']=$student->english_name;
+            $data['arabic_name']=$student->arabic_name;
             $data['image_path']=$student->image_path;
-            $data['mobile']=$student->mobile;
             $data['address']=$student->address;
             $data['phone']=$student->phone;
             $data['user']=$token->original;

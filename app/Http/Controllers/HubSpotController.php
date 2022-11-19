@@ -133,8 +133,7 @@ class HubSpotController extends Controller
         ]);
 
         Lead::create([
-            "first_name" => $response['properties']['firstname'],
-            "last_name" => $response['properties']['lastname'],
+            "english_name" => $response['properties']['firstname']." ".$response['properties']['lastname'],
             "email" => $response['properties']['email'],
             "lead_source_id"=> 8
         ]);

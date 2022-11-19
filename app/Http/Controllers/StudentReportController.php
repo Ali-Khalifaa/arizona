@@ -201,9 +201,8 @@ class StudentReportController extends Controller
                 $date = $course_track_student->created_at->toDateString();
                 if ($date >= $request->from_date && $date <= $request->to_date)
                 {
-                    $data[$length]['first_name'] = $course_track_student->lead->first_name;
-                    $data[$length]['middle_name'] = $course_track_student->lead->middle_name;
-                    $data[$length]['last_name'] = $course_track_student->lead->last_name;
+                    $data[$length]['first_name'] = $course_track_student->lead->arabic_name;
+                    $data[$length]['middle_name'] = $course_track_student->lead->english_name;
                     $data[$length]['name'] = $course_track_student->courseTrack->name;
                     $data[$length]['type'] = "course";
                     $data[$length]['attendance_lecture'] = 0 ;
@@ -236,9 +235,8 @@ class StudentReportController extends Controller
                 if ($date >= $request->from_date && $date <= $request->to_date)
                 {
 
-                    $data[$length]['first_name'] = $diploma_track_student->lead->first_name;
-                    $data[$length]['middle_name'] = $diploma_track_student->lead->middle_name;
-                    $data[$length]['last_name'] = $diploma_track_student->lead->last_name;
+                    $data[$length]['first_name'] = $diploma_track_student->lead->arabic_name;
+                    $data[$length]['middle_name'] = $diploma_track_student->lead->english_name;
                     $data[$length]['name'] = $diploma_track_student->diplomaTrack->name;
                     $data[$length]['type'] = "diploma";
                     $data[$length]['attendance_lecture'] = 0 ;
@@ -272,9 +270,8 @@ class StudentReportController extends Controller
                 $date = $course_track_student->created_at->toDateString();
                 if ($date >= $request->from_date && $date <= $request->to_date)
                 {
-                    $data[$length]['first_name'] = $course_track_student->lead->first_name;
-                    $data[$length]['middle_name'] = $course_track_student->lead->middle_name;
-                    $data[$length]['last_name'] = $course_track_student->lead->last_name;
+                    $data[$length]['first_name'] = $course_track_student->lead->arabic_name;
+                    $data[$length]['middle_name'] = $course_track_student->lead->english_name;
                     $data[$length]['name'] = $course_track_student->courseTrack->name;
                     $data[$length]['type'] = "course";
                     $data[$length]['attendance_lecture'] = 0 ;
@@ -307,9 +304,8 @@ class StudentReportController extends Controller
                 if ($date >= $request->from_date && $date <= $request->to_date)
                 {
 
-                    $data[$length]['first_name'] = $diploma_track_student->lead->first_name;
-                    $data[$length]['middle_name'] = $diploma_track_student->lead->middle_name;
-                    $data[$length]['last_name'] = $diploma_track_student->lead->last_name;
+                    $data[$length]['first_name'] = $diploma_track_student->lead->arabic_name;
+                    $data[$length]['middle_name'] = $diploma_track_student->lead->english_name;
                     $data[$length]['name'] = $diploma_track_student->diplomaTrack->name;
                     $data[$length]['type'] = "diploma";
                     $data[$length]['attendance_lecture'] = 0 ;
@@ -340,9 +336,8 @@ class StudentReportController extends Controller
             $course_track_students = CourseTrackStudent::where('lead_id',$request->lead_id)->get();
             foreach ($course_track_students as $index => $course_track_student)
             {
-                $data[$length]['first_name'] = $course_track_student->lead->first_name;
-                $data[$length]['middle_name'] = $course_track_student->lead->middle_name;
-                $data[$length]['last_name'] = $course_track_student->lead->last_name;
+                $data[$length]['first_name'] = $course_track_student->lead->arabic_name;
+                $data[$length]['middle_name'] = $course_track_student->lead->english_name;
                 $data[$length]['name'] = $course_track_student->courseTrack->name;
                 $data[$length]['type'] = "course";
                 $data[$length]['attendance_lecture'] = 0 ;
@@ -366,9 +361,8 @@ class StudentReportController extends Controller
 
             foreach ($diploma_track_students as $index => $diploma_track_student)
             {
-                $data[$length]['first_name'] = $diploma_track_student->lead->first_name;
-                $data[$length]['middle_name'] = $diploma_track_student->lead->middle_name;
-                $data[$length]['last_name'] = $diploma_track_student->lead->last_name;
+                $data[$length]['first_name'] = $diploma_track_student->lead->arabic_name;
+                $data[$length]['middle_name'] = $diploma_track_student->lead->english_name;
                 $data[$length]['name'] = $diploma_track_student->diplomaTrack->name;
                 $data[$length]['type'] = "diploma";
                 $data[$length]['attendance_lecture'] = 0 ;
@@ -394,9 +388,8 @@ class StudentReportController extends Controller
             $course_track_students = CourseTrackStudent::all();
             foreach ($course_track_students as $index => $course_track_student)
             {
-                $data[$length]['first_name'] = $course_track_student->lead->first_name;
-                $data[$length]['middle_name'] = $course_track_student->lead->middle_name;
-                $data[$length]['last_name'] = $course_track_student->lead->last_name;
+                $data[$length]['first_name'] = $course_track_student->lead->arabic_name;
+                $data[$length]['middle_name'] = $course_track_student->lead->english_name;
                 $data[$length]['name'] = $course_track_student->courseTrack->name;
                 $data[$length]['type'] = "course";
                 $data[$length]['attendance_lecture'] = 0 ;
@@ -418,9 +411,8 @@ class StudentReportController extends Controller
             $diploma_track_students = DiplomaTrackStudent::all();
             foreach ($diploma_track_students as $index => $diploma_track_student)
             {
-                $data[$length]['first_name'] = $diploma_track_student->lead->first_name;
-                $data[$length]['middle_name'] = $diploma_track_student->lead->middle_name;
-                $data[$length]['last_name'] = $diploma_track_student->lead->last_name;
+                $data[$length]['first_name'] = $diploma_track_student->lead->arabic_name;
+                $data[$length]['middle_name'] = $diploma_track_student->lead->english_name;
                 $data[$length]['name'] = $diploma_track_student->diplomaTrack->name;
                 $data[$length]['type'] = "diploma";
                 $data[$length]['attendance_lecture'] = 0 ;
@@ -466,9 +458,8 @@ class StudentReportController extends Controller
 
         foreach ($diploma_track_students as $diploma_track_student)
         {
-            $data[$length]['first_name'] = $diploma_track_student->lead->first_name;
-            $data[$length]['middle_name'] = $diploma_track_student->lead->middle_name;
-            $data[$length]['last_name'] = $diploma_track_student->lead->last_name;
+            $data[$length]['first_name'] = $diploma_track_student->lead->arabic_name;
+            $data[$length]['middle_name'] = $diploma_track_student->lead->english_name;
             $data[$length]['total_lecture_count'] = $diploma_track_student->diplomaTrack->diplomaTrackSchedule->count();
             $attendance_lecture = 0;
             $absence = 0;
@@ -523,9 +514,8 @@ class StudentReportController extends Controller
 
         foreach ($course_track_students as $course_track_student)
         {
-            $data[$length]['first_name'] = $course_track_student->lead->first_name;
-            $data[$length]['middle_name'] = $course_track_student->lead->middle_name;
-            $data[$length]['last_name'] = $course_track_student->lead->last_name;
+            $data[$length]['first_name'] = $course_track_student->lead->arabic_name;
+            $data[$length]['middle_name'] = $course_track_student->lead->english_name;
             $data[$length]['total_lecture_count'] = $course_track_student->courseTrack->courseTrackSchedule->count();
             $attendance_lecture = 0;
 

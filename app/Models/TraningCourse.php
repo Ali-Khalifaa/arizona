@@ -11,7 +11,7 @@ class TraningCourse extends Model
         'category_id',
         'vendor_id',
         'course_id',
-        'hour_price',
+        'percentage',
         'active_date',
     ];
 

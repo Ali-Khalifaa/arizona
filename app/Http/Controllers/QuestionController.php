@@ -16,17 +16,9 @@ class QuestionController extends Controller
      */
     public function getQuestionByMainQuestionId($id)
     {
-        $questions = Question::where('main_question_id',$id)->get();
-
-        foreach ($questions as $question)
-        {
-            $question->mainQuestion;
-            $question->mainQuestion['questionType'];
-            $question->exam;
-            $question->part;
-            $question->answers;
-
-        }
+        $questions = Question::with(['exam','part','answers','mainQuestion'=>function ($q){
+            $q->with('questionType');
+        }])->where('main_question_id',$id)->get();
 
         return response()->json($questions);
     }
@@ -36,16 +28,16 @@ class QuestionController extends Controller
      */
     public function getQuestionByPartIdTypeId($part_id,$type_id)
     {
-        
+
         $main_questions = MainQuestion::where([
             ['question_type_id','=',$type_id],
             ['part_id','=',$part_id],
         ])->get();
-   
+
         foreach ($main_questions as $main_question)
         {
             $questions = Question::where('main_question_id',$main_question->id)->get();
-            
+
             foreach($questions as $question)
             {
                 $question->mainQuestion;
@@ -70,22 +62,20 @@ class QuestionController extends Controller
         if($exam != null)
         {
             $exam_degree = $exam['exam']->exam_degree;
-              
+
             $questions_degree = Question::where('exam_id',$exam->exam_id)->sum('question_degree');
             $degree_residual = $exam_degree - $questions_degree;
         }
-  
+
         foreach($questions as $question)
-            {
-                $question->mainQuestion;
-                $question->mainQuestion['questionType'];
-                $question->exam;
-                $question->part;
-                $question->answers;
-                $question->degree_residual = $degree_residual;
-
-
-            }
+        {
+            $question->mainQuestion;
+            $question->mainQuestion['questionType'];
+            $question->exam;
+            $question->part;
+            $question->answers;
+            $question->degree_residual = $degree_residual;
+        }
 
         return response()->json($questions);
     }
@@ -108,7 +98,6 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-     
         $validator = Validator::make($request->all(), [
             'exam_id' => 'required|exists:exams,id',
             'main_question_id' => 'required|exists:main_questions,id',
@@ -175,7 +164,7 @@ class QuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-    
+
         $validator = Validator::make($request->all(), [
             'exam_id' => 'required|exists:exams,id',
             'main_question_id' => 'required|exists:main_questions,id',

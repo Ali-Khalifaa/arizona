@@ -20,7 +20,7 @@ class LeadsFollowupController extends Controller
         foreach($leadsFollowups as $leadsFollowup)
         {
             $leadsFollowup->noAction = 0;
-            if(count($leadsFollowup->reasons) > 0 || count($leadsFollowup->leads) > 0 || count($leadsFollowup->leadActivities) > 0) 
+            if(count($leadsFollowup->reasons) > 0 || count($leadsFollowup->leads) > 0 || count($leadsFollowup->leadActivities) > 0)
             {
                 $leadsFollowup->noAction = 1;
             }
@@ -38,7 +38,7 @@ class LeadsFollowupController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:100|unique:leads_followups',
+            'name' => 'required|string|max:100|unique:leads_followups,name',
 
         ]);
         if ($validator->fails()) {
@@ -73,8 +73,7 @@ class LeadsFollowupController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:100',
-
+            'name' => 'required|string|max:100|unique:leads_followups,name,'.$id,
         ]);
         if ($validator->fails()) {
             $errors = $validator->errors();

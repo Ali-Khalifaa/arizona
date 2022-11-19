@@ -212,12 +212,21 @@ Route::get('/salesTeamTargetsDetails/{id}','SalesTargetDetailsController@salesTe
 //----------- get Sales Target --------------
 Route::get('/getSalesTarget','SalesTargetDetailsController@getSalesTarget');
 
-// =================== Country ================================================================================
+// =================== city ================================================================================
 
-Route::get('/countries','CountryController@countries');
-Route::get('/countriesWithCities','CountryController@countriesWithCities');
-Route::get('/cities','CountryController@cities');
-Route::get('/getCitiesByCountryId/{id}','CountryController@getCitiesByCountryId');
+Route::resource('city', 'CityController');
+
+// =================== education Level ================================================================================
+
+Route::resource('educationLevel', 'EducationLevelController');
+
+// =================== specialty ================================================================================
+
+Route::resource('specialty', 'SpecialtyController');
+
+// =================== University ================================================================================
+
+Route::resource('university', 'UniversityController');
 
 // ============= Interesting Levels ==============================================================================
 

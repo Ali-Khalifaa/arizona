@@ -9,7 +9,7 @@ class TraningCategory extends Model
     protected $fillable = [
         'instructor_id',
         'category_id',
-        'hour_price',
+        'percentage',
         'active_date',
     ];
 

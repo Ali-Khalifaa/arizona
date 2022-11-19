@@ -80,10 +80,8 @@ class VendorController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-
             'name' => 'required|string|max:100',
             'category_id' => 'required|exists:categories,id',
-
         ]);
         if ($validator->fails()) {
             $errors = $validator->errors();
@@ -107,12 +105,9 @@ class VendorController extends Controller
     {
         $vendor = Vendor::with('courses')->find($id);
         if (count($vendor->courses ) == 0){
-
             $vendor->delete();
             return response()->json('deleted success');
-
         }else{
-
             return response()->json('this category have children');
         }
     }

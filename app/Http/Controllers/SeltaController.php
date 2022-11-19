@@ -15,15 +15,8 @@ class SeltaController extends Controller
      */
     public function index()
     {
-        $interviews = Interview::where('selta',1)->get();
-
-        foreach ($interviews as $interview)
-        {
-            $interview->interviewType;
-            $interview->leads;
-            $interview->diplomas;
-            $interview->instructors;
-        }
+        $interviews = Interview::with(['interviewType','leads','diplomas','instructors'])
+            ->where('selta',1)->get();
         return response()->json($interviews);
     }
 
@@ -128,20 +121,12 @@ class SeltaController extends Controller
      */
     public function getSeltaByInstructorId($id)
     {
-        $interviews = Interview::where([
+        $interviews = Interview::with(['interviewType','diplomas','instructors','leads'=>function($q){
+            $q->with('city');
+        }])->where([
             ['instructor_id',$id],
             ['selta',1],
         ])->get();
-
-        foreach ($interviews as $interview)
-        {
-            $interview->interviewType;
-            $interview->leads;
-            $interview->leads['country'];
-            $interview->leads['city'];
-            $interview->diplomas;
-            $interview->instructors;
-        }
 
         return response()->json($interviews);
     }

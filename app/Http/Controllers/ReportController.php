@@ -58,9 +58,8 @@ class ReportController extends Controller
                         $trainee->treasury_payment_note = null;
                     }
                     $trainee->transaction_date = $trainee->created_at;
-                    $trainee->first_name = $trainee->lead->first_name;
-                    $trainee->middle_name = $trainee->lead->middle_name;
-                    $trainee->last_name = $trainee->lead->last_name;
+                    $trainee->first_name = $trainee->lead->arabic_name;
+                    $trainee->middle_name = $trainee->lead->english_name;
                     $trainee->titel_id = $trainee->lead->id;
                     $trainee->treasury_title = $trainee->treasury->label;
 
@@ -153,9 +152,8 @@ class ReportController extends Controller
                         $trainee->treasury_payment_note = null;
                     }
                     $trainee->transaction_date = $trainee->created_at;
-                    $trainee->first_name = $trainee->lead->first_name;
-                    $trainee->middle_name = $trainee->lead->middle_name;
-                    $trainee->last_name = $trainee->lead->last_name;
+                    $trainee->first_name = $trainee->lead->arabic_name;
+                    $trainee->middle_name = $trainee->lead->english_name;
                     $trainee->titel_id = $trainee->lead->id;
                     $trainee->treasury_title = $trainee->treasury->label;
 
@@ -263,9 +261,8 @@ class ReportController extends Controller
                     $trainee->treasury_payment_note = null;
                 }
                 $trainee->transaction_date = $trainee->created_at;
-                $trainee->first_name = $trainee->lead->first_name;
-                $trainee->middle_name = $trainee->lead->middle_name;
-                $trainee->last_name = $trainee->lead->last_name;
+                $trainee->first_name = $trainee->lead->arabic_name;
+                $trainee->middle_name = $trainee->lead->english_name;
                 $trainee->titel_id = $trainee->lead->id;
                 if ($trainee->treasury != null)
                 {
@@ -377,9 +374,8 @@ class ReportController extends Controller
                 }
                 //lead
                 $trainee->transaction_date = $trainee->created_at;
-                $trainee->first_name = $trainee->lead->first_name;
-                $trainee->middle_name = $trainee->lead->middle_name;
-                $trainee->last_name = $trainee->lead->last_name;
+                $trainee->first_name = $trainee->lead->arabic_name;
+                $trainee->middle_name = $trainee->lead->english_name;
                 $trainee->titel_id = $trainee->lead->id;
 
                 // seals man

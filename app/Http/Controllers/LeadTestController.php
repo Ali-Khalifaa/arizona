@@ -30,9 +30,6 @@ class LeadTestController extends Controller
         $lead = Lead::where([
             ['id','=',$request->id],
             ['phone','=',$request->phone],
-        ])->orWhere([
-            ['id','=',$request->id],
-            ['mobile','=',$request->phone],
         ])->first();
 
         if (!$lead)

@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call(QuestionTypeSeeder::class);
         $this->call(DaysTableSeeder::class);
         $this->call(MonthTableSeeder::class);
+        $this->call(CityTableSeeder::class);
+        $this->call(EducationLevelTableSeeder::class);
+        $this->call(SpecialtyTableSeeder::class);
 
     }//end of run
 }//end of seeder

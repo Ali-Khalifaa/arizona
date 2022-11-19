@@ -21,7 +21,7 @@ class LeadSourcesController extends Controller
         {
             $leadSource->noAction = 0;
 
-            if(count($leadSource->leads) > 0) 
+            if(count($leadSource->leads) > 0)
             {
                 $leadSource->noAction = 1;
             }
@@ -39,7 +39,7 @@ class LeadSourcesController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:100|unique:lead_sources',
+            'name' => 'required|string|max:100|unique:lead_sources,name',
         ]);
         if ($validator->fails()) {
             $errors = $validator->errors();
@@ -75,7 +75,7 @@ class LeadSourcesController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:100',
+            'name' => 'required|string|max:100|unique:lead_sources,name,'.$id,
         ]);
         if ($validator->fails()) {
             $errors = $validator->errors();

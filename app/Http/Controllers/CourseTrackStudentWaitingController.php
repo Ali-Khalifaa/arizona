@@ -108,18 +108,21 @@ class CourseTrackStudentWaitingController extends Controller
         if($request->lead_id == "null")
         {
             $validator = Validator::make($request->all(), [
-                'first_name' => 'required|string|max:100',
-                'middle_name' => 'required|string|max:100',
-                'last_name' => 'required|string|max:100',
-                'education' => 'required|string|max:100',
+                'arabic_name' => 'required|string|max:100',
+                'english_name' => 'required|string|max:100',
                 'registration_remark' => 'string',
-                'mobile' => 'required|regex:/(01)[0-9]{9}/|unique:leads',
-                'phone' => 'required|unique:leads',
-                'email' => 'required|string|email|max:255|unique:leads',
-                'country_id' => 'required|exists:countries,id',
-                'state_id' => 'required|exists:states,id',
+                'phone' => 'required|unique:leads,phone',
+                'email' => 'nullable|string|email|max:255|unique:leads,email',
+                'city_id' => 'required|exists:cities,id',
                 'interesting_level_id' => 'required|exists:interesting_levels,id',
+                'education_level_id' => 'nullable|exists:education_levels,id',
+                'specialty_id' => 'nullable|exists:specialties,id',
+                'university_id' => 'nullable|exists:universities,id',
                 'lead_source_id' => 'required|exists:lead_sources,id',
+                'attendance_state' => 'required',
+                'work' => 'nullable|string|max:100',
+                'whatsapp_number' => 'nullable|string|max:100',
+                'birth_date' => 'nullable|date',
             ]);
 
             if ($validator->fails()) {
@@ -128,18 +131,21 @@ class CourseTrackStudentWaitingController extends Controller
             }
 
             $lead = Lead::create([
-                'first_name' => $request->first_name,
-                'middle_name' => $request->middle_name,
-                'last_name' => $request->last_name,
-                'education' => $request->education,
+                'arabic_name' => $request->arabic_name,
+                'english_name' => $request->english_name,
                 'registration_remark' => $request->registration_remark,
-                'mobile' => $request->mobile,
                 'phone' => $request->phone,
                 'email' => $request->email,
-                'country_id' => $request->country_id,
-                'state_id' => $request->state_id,
+                'city_id' => $request->city_id,
                 'interesting_level_id' => $request->interesting_level_id,
+                'education_level_id' => $request->education_level_id,
+                'specialty_id' => $request->specialty_id,
+                'university_id' => $request->university_id,
                 'lead_source_id' => $request->lead_source_id,
+                'attendance_state' => $request->attendance_state,
+                'work' => $request->work,
+                'whatsapp_number' => $request->whatsapp_number,
+                'birth_date' => $request->birth_date,
                 'employee_id' => $request->employee_id,
                 'is_client' => 1
             ]);

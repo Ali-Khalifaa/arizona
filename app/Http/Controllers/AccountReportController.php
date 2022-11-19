@@ -61,9 +61,8 @@ class AccountReportController extends Controller
                     }
 
                     $trainee->transaction_date = $trainee->created_at;
-                    $trainee->first_name = $trainee->lead->first_name;
-                    $trainee->middle_name = $trainee->lead->middle_name;
-                    $trainee->last_name = $trainee->lead->last_name;
+                    $trainee->first_name = $trainee->lead->arabic_name;
+                    $trainee->middle_name = $trainee->lead->english_name;
                     $trainee->titel_id = $trainee->lead->id;
                     $trainee->treasury_title = $trainee->treasury->label;
 
@@ -245,9 +244,8 @@ class AccountReportController extends Controller
                         $total_expense += $trainee->amount;
                     }
                     $trainee->transaction_date = $trainee->created_at;
-                    $trainee->first_name = $trainee->lead->first_name;
-                    $trainee->middle_name = $trainee->lead->middle_name;
-                    $trainee->last_name = $trainee->lead->last_name;
+                    $trainee->first_name = $trainee->lead->arabic_name;
+                    $trainee->middle_name = $trainee->lead->english_name;
                     $trainee->titel_id = $trainee->lead->id;
                     $trainee->treasury_title = $trainee->treasury->label;
 
@@ -453,9 +451,8 @@ class AccountReportController extends Controller
                         $trainee->treasury_payment_note = null;
                     }
                     $trainee->transaction_date = $trainee->created_at;
-                    $trainee->first_name = $trainee->lead->first_name;
-                    $trainee->middle_name = $trainee->lead->middle_name;
-                    $trainee->last_name = $trainee->lead->last_name;
+                    $trainee->first_name = $trainee->lead->arabic_name;
+                    $trainee->middle_name = $trainee->lead->english_name;
                     $trainee->titel_id = $trainee->lead->id;
                     $trainee->treasury_title = $trainee->treasury->label;
                     $total_expense += $trainee->amount;
@@ -601,9 +598,8 @@ class AccountReportController extends Controller
                         $trainee->treasury_payment_note = null;
                     }
                     $trainee->transaction_date = $trainee->created_at;
-                    $trainee->first_name = $trainee->lead->first_name;
-                    $trainee->middle_name = $trainee->lead->middle_name;
-                    $trainee->last_name = $trainee->lead->last_name;
+                    $trainee->first_name = $trainee->lead->arabic_name;
+                    $trainee->middle_name = $trainee->lead->english_name;
                     $trainee->titel_id = $trainee->lead->id;
                     $trainee->treasury_title = $trainee->treasury->label;
                     $total_expense += $trainee->amount;
@@ -777,9 +773,8 @@ class AccountReportController extends Controller
                     }
                     $total_income += $trainee->amount;
                     $trainee->transaction_date = $trainee->created_at;
-                    $trainee->first_name = $trainee->lead->first_name;
-                    $trainee->middle_name = $trainee->lead->middle_name;
-                    $trainee->last_name = $trainee->lead->last_name;
+                    $trainee->first_name = $trainee->lead->arabic_name;
+                    $trainee->middle_name = $trainee->lead->english_name;
                     $trainee->titel_id = $trainee->lead->id;
                     $trainee->treasury_title = $trainee->treasury->label;
 
@@ -862,9 +857,8 @@ class AccountReportController extends Controller
                         $trainee->treasury_payment_note = null;
                     }
                     $trainee->transaction_date = $trainee->created_at;
-                    $trainee->first_name = $trainee->lead->first_name;
-                    $trainee->middle_name = $trainee->lead->middle_name;
-                    $trainee->last_name = $trainee->lead->last_name;
+                    $trainee->first_name = $trainee->lead->arabic_name;
+                    $trainee->middle_name = $trainee->lead->english_name;
                     $trainee->titel_id = $trainee->lead->id;
                     $trainee->treasury_title = $trainee->treasury->label;
                     $total_income += $trainee->amount;
@@ -963,9 +957,8 @@ class AccountReportController extends Controller
                     $trainee->treasury_payment_note = null;
                 }
                 $trainee->transaction_date = $trainee->created_at;
-                $trainee->first_name = $trainee->lead->first_name;
-                $trainee->middle_name = $trainee->lead->middle_name;
-                $trainee->last_name = $trainee->lead->last_name;
+                $trainee->first_name = $trainee->lead->arabic_name;
+                $trainee->middle_name = $trainee->lead->english_name;
                 $trainee->titel_id = $trainee->lead->id;
                 if ($trainee->treasury != null) {
                     $trainee->treasury_title = $trainee->treasury->label;
@@ -1070,9 +1063,8 @@ class AccountReportController extends Controller
                     $trainee->treasury_title = null;
                 }
                 $trainee->transaction_date = $trainee->created_at;
-                $trainee->first_name = $trainee->lead->first_name;
-                $trainee->middle_name = $trainee->lead->middle_name;
-                $trainee->last_name = $trainee->lead->last_name;
+                $trainee->first_name = $trainee->lead->arabic_name;
+                $trainee->middle_name = $trainee->lead->english_name;
                 $trainee->titel_id = $trainee->lead->id;
 
 
@@ -1249,9 +1241,8 @@ class AccountReportController extends Controller
                     }
 
                     $trainee->transaction_date = $trainee->created_at;
-                    $trainee->first_name = $trainee->lead->first_name;
-                    $trainee->middle_name = $trainee->lead->middle_name;
-                    $trainee->last_name = $trainee->lead->last_name;
+                    $trainee->first_name = $trainee->lead->arabic_name;
+                    $trainee->middle_name = $trainee->lead->english_name;
                     $trainee->titel_id = $trainee->lead->id;
                     $trainee->treasury_title = $trainee->treasury->label;
 
@@ -1432,9 +1423,8 @@ class AccountReportController extends Controller
                         $data['total_expense'] += $trainee->amount;
                     }
                     $trainee->transaction_date = $trainee->created_at;
-                    $trainee->first_name = $trainee->lead->first_name;
-                    $trainee->middle_name = $trainee->lead->middle_name;
-                    $trainee->last_name = $trainee->lead->last_name;
+                    $trainee->first_name = $trainee->lead->arabic_name;
+                    $trainee->middle_name = $trainee->lead->english_name;
                     $trainee->titel_id = $trainee->lead->id;
                     $trainee->treasury_title = $trainee->treasury->label;
 
@@ -1643,9 +1633,8 @@ class AccountReportController extends Controller
                     }
 
                     $trainee->transaction_date = $trainee->created_at;
-                    $trainee->first_name = $trainee->lead->first_name;
-                    $trainee->middle_name = $trainee->lead->middle_name;
-                    $trainee->last_name = $trainee->lead->last_name;
+                    $trainee->first_name = $trainee->lead->arabic_name;
+                    $trainee->middle_name = $trainee->lead->english_name;
                     $trainee->titel_id = $trainee->lead->id;
                     $trainee->treasury_title = $trainee->treasury->label;
 
@@ -1841,9 +1830,8 @@ class AccountReportController extends Controller
             }
 
             $trainee->insertion_date = $trainee->created_at;
-            $trainee->first_name = $trainee->lead->first_name;
-            $trainee->middle_name = $trainee->lead->middle_name;
-            $trainee->last_name = $trainee->lead->last_name;
+            $trainee->first_name = $trainee->lead->arabic_name;
+            $trainee->middle_name = $trainee->lead->english_name;
         }
 
         return response()->json($trainees_payment);
@@ -1908,9 +1896,8 @@ class AccountReportController extends Controller
                     }
 
                     $trainee->insertion_date = $trainee->created_at;
-                    $trainee->first_name = $trainee->lead->first_name;
-                    $trainee->middle_name = $trainee->lead->middle_name;
-                    $trainee->last_name = $trainee->lead->last_name;
+                    $trainee->first_name = $trainee->lead->arabic_name;
+                    $trainee->middle_name = $trainee->lead->english_name;
                 }
             }
 
@@ -1947,9 +1934,8 @@ class AccountReportController extends Controller
                     }
 
                     $trainee->insertion_date = $trainee->created_at;
-                    $trainee->first_name = $trainee->lead->first_name;
-                    $trainee->middle_name = $trainee->lead->middle_name;
-                    $trainee->last_name = $trainee->lead->last_name;
+                    $trainee->first_name = $trainee->lead->arabic_name;
+                    $trainee->middle_name = $trainee->lead->english_name;
                 }
             }
         }
@@ -2016,9 +2002,8 @@ class AccountReportController extends Controller
                     }
 
                     $trainee->insertion_date = $trainee->created_at;
-                    $trainee->first_name = $trainee->lead->first_name;
-                    $trainee->middle_name = $trainee->lead->middle_name;
-                    $trainee->last_name = $trainee->lead->last_name;
+                    $trainee->first_name = $trainee->lead->arabic_name;
+                    $trainee->middle_name = $trainee->lead->english_name;
                 }
             }
 
@@ -2054,9 +2039,8 @@ class AccountReportController extends Controller
                     }
 
                     $trainee->insertion_date = $trainee->created_at;
-                    $trainee->first_name = $trainee->lead->first_name;
-                    $trainee->middle_name = $trainee->lead->middle_name;
-                    $trainee->last_name = $trainee->lead->last_name;
+                    $trainee->first_name = $trainee->lead->arabic_name;
+                    $trainee->middle_name = $trainee->lead->english_name;
                 }
             }
         }

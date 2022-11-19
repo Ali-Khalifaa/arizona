@@ -15,17 +15,19 @@ class CreateLeadsTable extends Migration
     {
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name')->nullable();
-            $table->string('middle_name')->nullable();
-            $table->string('last_name')->nullable();
+            $table->string('arabic_name')->nullable();
+            $table->string('english_name')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->string('mobile')->nullable();
-            $table->bigInteger('country_id')->nullable();
-            $table->bigInteger('state_id')->nullable();
+            $table->bigInteger('city_id')->unsigned()->nullable();
             $table->bigInteger('interesting_level_id')->unsigned()->nullable();
+            $table->bigInteger('education_level_id')->unsigned()->nullable();
+            $table->bigInteger('specialty_id')->unsigned()->nullable();
+            $table->bigInteger('university_id')->unsigned()->nullable();
             $table->bigInteger('lead_source_id')->unsigned()->nullable();
-            $table->string('education')->nullable();
+            $table->string('work')->nullable();
+            $table->date('birth_date')->nullable();
+            $table->string('whatsapp_number')->nullable();
 
             $table->boolean('lead_type')->default(0);
             $table->string('company_name')->nullable();
@@ -49,6 +51,10 @@ class CreateLeadsTable extends Migration
             $table->string('hub_spot_id')->nullable();
 
 
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
+            $table->foreign('education_level_id')->references('id')->on('education_levels')->onDelete('cascade');
+            $table->foreign('specialty_id')->references('id')->on('specialties')->onDelete('cascade');
+            $table->foreign('university_id')->references('id')->on('universities')->onDelete('cascade');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->foreign('interesting_level_id')->references('id')->on('interesting_levels')->onDelete('cascade');
             $table->foreign('leads_followup_id')->references('id')->on('leads_followups')->onDelete('cascade');

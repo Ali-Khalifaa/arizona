@@ -15,7 +15,7 @@ class Instructor extends Model
         'phone',
         'cv',
         'img',
-        'hour_price',
+        'percentage',
         'birth_date',
         'user_id',
         'has_account',

@@ -17,7 +17,7 @@ class CompanyLeadController extends Controller
      */
     public function companyLeadsByCompanyId($id)
     {
-        $leads = Lead::with(['leadDiplomas','country','city'])->where([
+        $leads = Lead::with(['leadDiplomas','city'])->where([
                 ['company_id',$id],
                 ['black_list',0],
             ])->get();
@@ -65,19 +65,21 @@ class CompanyLeadController extends Controller
     public function companyLeadsNew(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string|max:100',
-            'middle_name' => 'required|string|max:100',
-            'last_name' => 'required|string|max:100',
-            'education' => 'required|string|max:100',
+            'arabic_name' => 'required|string|max:100',
+            'english_name' => 'required|string|max:100',
             'registration_remark' => 'string',
-            'mobile' => 'required|regex:/(01)[0-9]{9}/|unique:leads',
-            'phone' => 'required|unique:leads',
-            'email' => 'required|string|email|max:255|unique:leads',
-            'country_id' => 'required|exists:countries,id',
-            'state_id' => 'required|exists:states,id',
+            'phone' => 'required|unique:leads,phone',
+            'email' => 'nullable|string|email|max:255|unique:leads,email',
+            'city_id' => 'required|exists:cities,id',
             'interesting_level_id' => 'required|exists:interesting_levels,id',
+            'education_level_id' => 'nullable|exists:education_levels,id',
+            'specialty_id' => 'nullable|exists:specialties,id',
+            'university_id' => 'nullable|exists:universities,id',
             'lead_source_id' => 'required|exists:lead_sources,id',
             'attendance_state' => 'required',
+            'work' => 'nullable|string|max:100',
+            'whatsapp_number' => 'nullable|string|max:100',
+            'birth_date' => 'nullable|date',
             'company_id' => 'required|exists:companies,id',
         ]);
 
@@ -136,7 +138,7 @@ class CompanyLeadController extends Controller
      */
     public function show($id)
     {
-       
+
     }
 
     /**
@@ -148,7 +150,7 @@ class CompanyLeadController extends Controller
      */
     public function update(Request $request, $id)
     {
-    
+
     }
 
     /**

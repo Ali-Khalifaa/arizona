@@ -49,20 +49,15 @@ class LeadController extends Controller
      */
     public function index()
     {
-        $leads = Lead::where([
+        $leads = Lead::with(['educationLevel','specialty','university','city','interestingLevel','leadSources','leadCourses','leadDiplomas'])
+            ->where([
             ['is_client',0],
             ['lead_type',0],
             ['black_list',0],
         ])->get();
+
         foreach ($leads as $lead)
         {
-            $lead->country;
-            $lead->city;
-            $lead->interestingLevel;
-            $lead->leadSources;
-            $lead->leadCourses;
-            $lead->leadDiplomas;
-
             $lead->noAction = 0;
 
             if($lead->employee != null)
@@ -70,6 +65,7 @@ class LeadController extends Controller
                 $lead->noAction = 1;
             }
         }
+
         return response()->json($leads);
     }
 
@@ -82,19 +78,21 @@ class LeadController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string|max:100',
-            'middle_name' => 'required|string|max:100',
-            'last_name' => 'required|string|max:100',
-            'education' => 'required|string|max:100',
+            'arabic_name' => 'required|string|max:100',
+            'english_name' => 'required|string|max:100',
             'registration_remark' => 'string',
-            'mobile' => 'required|unique:leads',
-            'phone' => 'required|unique:leads',
-            'email' => 'required|string|email|max:255|unique:leads',
-            'country_id' => 'required|exists:countries,id',
-            'state_id' => 'required|exists:states,id',
+            'phone' => 'required|unique:leads,phone',
+            'email' => 'nullable|string|email|max:255|unique:leads,email',
+            'city_id' => 'required|exists:cities,id',
             'interesting_level_id' => 'required|exists:interesting_levels,id',
+            'education_level_id' => 'nullable|exists:education_levels,id',
+            'specialty_id' => 'nullable|exists:specialties,id',
+            'university_id' => 'nullable|exists:universities,id',
             'lead_source_id' => 'required|exists:lead_sources,id',
             'attendance_state' => 'required',
+            'work' => 'nullable|string|max:100',
+            'whatsapp_number' => 'nullable|string|max:100',
+            'birth_date' => 'nullable|date',
         ]);
 
         if ($validator->fails()) {
@@ -149,7 +147,7 @@ class LeadController extends Controller
      */
     public function show($id)
     {
-        $lead = Lead::with(['country','city','interestingLevel','leadSources','leadCourses','leadDiplomas'])
+        $lead = Lead::with(['educationLevel','specialty','university','city','interestingLevel','leadSources','leadCourses','leadDiplomas'])
             ->findOrFail($id);
         return response()->json($lead);
     }
@@ -164,16 +162,21 @@ class LeadController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string|max:100',
-            'middle_name' => 'required|string|max:100',
-            'last_name' => 'required|string|max:100',
-            'education' => 'required|string|max:100',
+            'arabic_name' => 'required|string|max:100',
+            'english_name' => 'required|string|max:100',
             'registration_remark' => 'string',
-            'country_id' => 'required|exists:countries,id',
-            'state_id' => 'required|exists:states,id',
+            'phone' => 'required|unique:leads,phone,'.$id,
+            'email' => 'nullable|string|email|max:255|unique:leads,email,'.$id,
+            'city_id' => 'required|exists:cities,id',
             'interesting_level_id' => 'required|exists:interesting_levels,id',
+            'education_level_id' => 'nullable|exists:education_levels,id',
+            'specialty_id' => 'nullable|exists:specialties,id',
+            'university_id' => 'nullable|exists:universities,id',
             'lead_source_id' => 'required|exists:lead_sources,id',
             'attendance_state' => 'required',
+            'work' => 'nullable|string|max:100',
+            'whatsapp_number' => 'nullable|string|max:100',
+            'birth_date' => 'nullable|date',
         ]);
 
         if ($validator->fails()) {
@@ -182,42 +185,6 @@ class LeadController extends Controller
         }
 
         $lead = Lead::findOrFail($id);
-
-        if ($lead->phone != $request->phone)
-        {
-            $validator = Validator::make($request->all(), [
-                'phone' => 'required|unique:leads',
-            ]);
-
-            if ($validator->fails()) {
-                $errors = $validator->errors();
-                return response()->json($errors,422);
-            }
-        }
-
-        if ($lead->mobile != $request->mobile)
-        {
-            $validator = Validator::make($request->all(), [
-                'mobile' => 'required|unique:leads',
-            ]);
-
-            if ($validator->fails()) {
-                $errors = $validator->errors();
-                return response()->json($errors,422);
-            }
-        }
-
-        if ($lead->email != $request->email)
-        {
-            $validator = Validator::make($request->all(), [
-                'email' => 'required|string|email|max:255|unique:leads',
-            ]);
-
-            if ($validator->fails()) {
-                $errors = $validator->errors();
-                return response()->json($errors,422);
-            }
-        }
 
         $lead->update($request->all());
 
@@ -402,7 +369,8 @@ class LeadController extends Controller
 
     public function getLeadsEmployee($id)
     {
-        $leads = Lead::where([
+        $leads = Lead::with(['educationLevel','specialty','university','city','interestingLevel','leadSources','leadCourses','leadDiplomas'])
+            ->where([
             ['employee_id','=',$id],
             ['is_client','=',0],
             ['add_placement','=',0],
@@ -414,16 +382,6 @@ class LeadController extends Controller
             ['black_list',0],
         ])->get();
 
-        foreach ($leads as $lead)
-        {
-            $lead->country;
-            $lead->city;
-            $lead->interestingLevel;
-            $lead->leadSources;
-            $lead->leadCourses;
-            $lead->leadDiplomas;
-        }
-
         return response()->json($leads);
     }
 
@@ -433,21 +391,12 @@ class LeadController extends Controller
 
     public function getLeadsRegisterTrackEmployee($id)
     {
-        $leads = Lead::where([
+        $leads = Lead::with(['educationLevel','specialty','university','city','interestingLevel','leadSources','leadCourses','leadDiplomas'])
+            ->where([
             ['employee_id','=',$id],
             ['is_client','=',0],
             ['black_list','=',0],
         ])->get();
-
-        foreach ($leads as $lead)
-        {
-            $lead->country;
-            $lead->city;
-            $lead->interestingLevel;
-            $lead->leadSources;
-            $lead->leadCourses;
-            $lead->leadDiplomas;
-        }
 
         return response()->json($leads);
     }
@@ -458,7 +407,8 @@ class LeadController extends Controller
 
     public function getClintEmployee($id)
     {
-        $leads = Lead::where([
+        $leads = Lead::with(['educationLevel','specialty','university','city','interestingLevel','leadSources','leadCourses','leadDiplomas'])
+        ->where([
             ['employee_id','=',$id],
             ['is_client','=',1],
             ['black_list','=',0],
@@ -467,16 +417,6 @@ class LeadController extends Controller
             ['is_client','=',1],
             ['black_list','=',0],
         ])->get();
-
-        foreach ($leads as $lead)
-        {
-            $lead->country;
-            $lead->city;
-            $lead->interestingLevel;
-            $lead->leadSources;
-            $lead->leadCourses;
-            $lead->leadDiplomas;
-        }
 
         return response()->json($leads);
     }
@@ -489,7 +429,7 @@ class LeadController extends Controller
     {
         if ($request->from_date !=null && $request->to_date !=null )
         {
-            $leads = Lead::with(['country','city','employee','user'])->where([
+            $leads = Lead::with(['educationLevel','specialty','university','city','employee','user'])->where([
                 ['is_client','=',1],
                 ['black_list','=',0],
             ])->whereDate('created_at','>=',$request->from_date)->whereDate('created_at','<=',$request->to_date)
@@ -497,23 +437,22 @@ class LeadController extends Controller
 
         }elseif ($request->name != null)
         {
-            $leads = Lead::with(['country','city','employee','user'])->where([
+            $leads = Lead::with(['educationLevel','specialty','university','city','employee','user'])->where([
                 ['is_client','=',1],
                 ['black_list','=',0],
             ])->when($request->name,function($q) use($request)
             {
-                return $q->where('first_name', 'LIKE', '%' . $request->name . '%')
-                    ->orWhere('middle_name', 'LIKE', '%' . $request->name . '%')
+                return $q->where('arabic_name', 'LIKE', '%' . $request->name . '%')
+                    ->orWhere('english_name', 'LIKE', '%' . $request->name . '%')
                     ->orWhere('id', 'LIKE', '%' . $request->name . '%')
-                    ->orWhere('last_name', 'LIKE', '%' . $request->name . '%')
-                    ->orWhere('mobile', 'LIKE', '%' . $request->name . '%')
+                    ->orWhere('phone', 'LIKE', '%' . $request->name . '%')
                     ->orWhere('email', 'LIKE', '%' . $request->name . '%');
 
             })->latest()->paginate(10);
 
         }else{
 
-            $leads = Lead::with(['country','city','employee','user'])->where([
+            $leads = Lead::with(['educationLevel','specialty','university','city','employee','user'])->where([
                 ['is_client','=',1],
                 ['black_list','=',0],
             ])->latest()->paginate(10);
@@ -527,7 +466,7 @@ class LeadController extends Controller
 
         if ($request->from_date !=null && $request->to_date !=null )
         {
-            $leads = Lead::with(['country','city','employee','user'])->where([
+            $leads = Lead::with(['educationLevel','specialty','university','city','employee','user'])->where([
             ['is_client','=',1],
             ['black_list','=',0],
             ])->whereDate('created_at','>',$request->from_date)->whereDate('created_at','>',$request->to_date)
@@ -535,16 +474,15 @@ class LeadController extends Controller
 
         }elseif ($request->name != null)
         {
-            $leads = Lead::with(['country','city','employee','user'])->where([
+            $leads = Lead::with(['educationLevel','specialty','university','city','employee','user'])->where([
                 ['is_client','=',1],
                 ['black_list','=',0],
             ])->when($request->name,function($q) use($request)
             {
-                return $q->where('first_name', 'LIKE', '%' . $request->name . '%')
-                    ->orWhere('middle_name', 'LIKE', '%' . $request->name . '%')
+                return $q->where('arabic_name', 'LIKE', '%' . $request->name . '%')
+                    ->orWhere('english_name', 'LIKE', '%' . $request->name . '%')
                     ->orWhere('id', 'LIKE', '%' . $request->name . '%')
-                    ->orWhere('last_name', 'LIKE', '%' . $request->name . '%')
-                    ->orWhere('mobile', 'LIKE', '%' . $request->name . '%')
+                    ->orWhere('phone', 'LIKE', '%' . $request->name . '%')
                     ->orWhere('email', 'LIKE', '%' . $request->name . '%');
 
             })->latest()->paginate(10);

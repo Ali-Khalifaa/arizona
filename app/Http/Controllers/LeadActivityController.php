@@ -15,7 +15,7 @@ class LeadActivityController extends Controller
      */
     public function getLeadFollowUpEmployee($followup_id,$employee_id)
     {
-        $leads = Lead::with(['country','city','employee','interestingLevel','leadSources','leadCourses','leadDiplomas','leadActivities'])
+        $leads = Lead::with(['educationLevel','specialty','university','city','employee','interestingLevel','leadSources','leadCourses','leadDiplomas','leadActivities'])
             ->where([
             ['employee_id',$employee_id],
             ['leads_followup_id',$followup_id],
@@ -75,7 +75,7 @@ class LeadActivityController extends Controller
 
     public function getLeadInterviewEmployee($id)
     {
-        $leads = Lead::with(['country','city','employee','interestingLevel','leadSources','leadCourses','leadDiplomas','leadActivities'])
+        $leads = Lead::with(['educationLevel','specialty','university','city','employee','interestingLevel','leadSources','leadCourses','leadDiplomas','leadActivities'])
             ->where([
                 ['employee_id',$id],
                 ['is_client','=',0],
@@ -96,7 +96,7 @@ class LeadActivityController extends Controller
 
     public function getLeadCourseEmployee($id)
     {
-        $leads = Lead::with(['country','city','employee','interestingLevel','leadSources','leadCourses','leadDiplomas','leadActivities'])
+        $leads = Lead::with(['educationLevel','specialty','university','city','employee','interestingLevel','leadSources','leadCourses','leadDiplomas','leadActivities'])
             ->where([
                 ['employee_id',$id],
                 ['is_client','=',0],

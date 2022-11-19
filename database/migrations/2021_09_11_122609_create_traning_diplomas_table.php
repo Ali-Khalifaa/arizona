@@ -19,7 +19,7 @@ class CreateTraningDiplomasTable extends Migration
             $table->bigInteger('category_id')->unsigned();
             $table->bigInteger('vendor_id')->unsigned();
             $table->bigInteger('diploma_id')->unsigned();
-            $table->double('hour_price',8,2);
+            $table->double('percentage',8,2);
             $table->date('active_date');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('instructor_id')->references('id')->on('instructors')->onDelete('cascade');

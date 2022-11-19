@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class City extends Model
 {
-    //
+    protected $fillable =['name'];
+
+    public function leads(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Lead::class);
+    }
 }

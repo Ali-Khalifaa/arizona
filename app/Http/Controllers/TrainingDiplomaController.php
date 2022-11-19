@@ -32,8 +32,8 @@ class TrainingDiplomaController extends Controller
             'category_id' => 'required|exists:categories,id',
             'vendor_id' => 'required|exists:vendors,id',
             'diploma_id' => 'required|exists:diplomas,id',
-            'hour_price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-            'active_date' => 'required|date|unique:traning_diplomas',
+            'percentage' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|max:100',
+            'active_date' => 'required|date|unique:traning_diplomas,active_date',
         ]);
 
         if ($validator->fails()) {
@@ -75,8 +75,8 @@ class TrainingDiplomaController extends Controller
             'category_id' => 'required|exists:categories,id',
             'vendor_id' => 'required|exists:vendors,id',
             'diploma_id' => 'required|exists:diplomas,id',
-            'hour_price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-
+            'percentage' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|max:100',
+            'active_date' => 'required|date|unique:traning_diplomas,active_date,'.$id,
         ]);
 
         if ($validator->fails()) {
@@ -85,17 +85,6 @@ class TrainingDiplomaController extends Controller
         }
 
         $trainingDiploma = TraningDiploma::findOrFail($id);
-        if ($trainingDiploma->active_date != $request->active_date)
-        {
-            $validator = Validator::make($request->all(), [
-                'active_date' => 'required|date|unique:traning_diplomas',
-            ]);
-
-            if ($validator->fails()) {
-                $errors = $validator->errors();
-                return response()->json($errors,422);
-            }
-        }
         $trainingDiploma->update($request->all());
 
         return response()->json($trainingDiploma);

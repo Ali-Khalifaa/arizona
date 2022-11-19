@@ -7,17 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Lead extends Model
 {
     protected $fillable = [
-      'first_name',
-      'middle_name',
-      'last_name',
+      'arabic_name',
+      'english_name',
       'email',
       'phone',
-      'mobile',
-      'country_id',
-      'state_id',
+      'city_id',
       'interesting_level_id',
+      'education_level_id',
+      'specialty_id',
+      'university_id',
       'lead_source_id',
-      'education',
+      'work',
+      'birth_date',
+      'whatsapp_number',
       'lead_type',
       'company_name',
       'add_list',
@@ -56,14 +58,24 @@ class Lead extends Model
 
     //relations
 
-    public function country(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(Country::class,'country_id');
-    }
-
     public function city(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(State::class,'state_id');
+        return $this->belongsTo(City::class,'city_id');
+    }
+
+    public function educationLevel(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(EducationLevel::class,'education_level_id');
+    }
+
+    public function specialty(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Specialty::class,'specialty_id');
+    }
+
+    public function university(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(University::class,'university_id');
     }
 
     public function employee(): \Illuminate\Database\Eloquent\Relations\BelongsTo

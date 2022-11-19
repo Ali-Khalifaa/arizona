@@ -12,7 +12,7 @@ class DiplomaTrack extends Model
         'instructor_id',
         'category_id',
         'vendor_id',
-        'instructor_hour_cost',
+        'instructor_percentage',
         'start_date',
         'end_date',
         'registration_last_date',

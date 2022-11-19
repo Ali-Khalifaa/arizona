@@ -61,7 +61,6 @@ class TreasuryTransactionOutController extends Controller
           ]);
 
           $treasury_note = TreasuryNotes::create([
-
              'employee_id' => $request->employee_id,
              'note' => $request->note,
              'amount' => $request->amount,

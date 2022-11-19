@@ -34,8 +34,8 @@ class InstructorPaymentController extends Controller
             }
 
             $courseTrack->paiedAmount = $paiedAmount;
-            $courseTrack->hourPrice = $courseTrack->instructor->hour_price;
-            $courseTrack->courseHoursAmount = $courseTrack->instructor_hour_cost;
+            $courseTrack->presentage = $courseTrack->instructor->percentage;
+            $courseTrack->coursePercentageAmount = $courseTrack->instructor_percentage;
             $absenselecturesCourse = $courseTrack->courseTrackSchedule->where('date','<=',now())->count();
             $total_hours_dayle=0;
             $attendance_start_time =  $courseTrack->courseTrackSchedule[0]->start_time;
@@ -73,7 +73,20 @@ class InstructorPaymentController extends Controller
             $absenseHours = $total_lectures * $total_hours_dayle;
             $courseTrack->absenseHours = $absenseHours;
             $courseTrack->attendanceHours =$attendanceHours;
-            $courseTrack->attendanceHoursAmount = $attendanceHours *  $courseTrack->courseHoursAmount;
+
+            //student 50% lectures
+            $half_time = $courseTrack->courseTrackSchedule->count() / 2;
+            $studentAttendance = 0;
+
+            foreach ($courseTrack->courseTrackStudent as $courseTrackStudent){
+                $attendanceCount = $courseTrackStudent->traineesAttendanceCourse->where('attendance',1)->count();
+                if ($attendanceCount >= $half_time){
+                    $studentAttendance += 1;
+                }
+            }
+
+            $courseTrack->courseEarnings = $studentAttendance *  $courseTrack->total_cost;
+            $courseTrack->instractorAccounts = (($studentAttendance *  $courseTrack->total_cost) * $courseTrack->instructor_percentage) / 100;
             $data[] = $courseTrack;
         }
 
@@ -92,8 +105,8 @@ class InstructorPaymentController extends Controller
                 }
             }
             $diplomaTrack->paiedAmount = $paiedAmount;
-            $diplomaTrack->hourPrice = $diplomaTrack->instructor->hour_price;
-            $diplomaTrack->courseHoursAmount = $diplomaTrack->instructor_hour_cost;
+            $diplomaTrack->presentage = $diplomaTrack->instructor->presentage;
+            $diplomaTrack->coursePercentageAmount = $diplomaTrack->instructor_percentage;
             $absenselecturesDiploma = $diplomaTrack->diplomaTrackSchedule->where('date','<=',now())->count();
             $total_hours_dayle=0;
             $attendance_start_time =  $diplomaTrack->diplomaTrackSchedule[0]->start_time;
@@ -131,7 +144,20 @@ class InstructorPaymentController extends Controller
             $absenseHours = $total_lectures * $total_hours_dayle;
             $diplomaTrack->absenseHours = $absenseHours;
             $diplomaTrack->attendanceHours =$attendanceHours;
-            $diplomaTrack->attendanceHoursAmount = $attendanceHours *  $diplomaTrack->diplomaHoursAmount;
+
+            //student 50% lectures
+            $half_time = $diplomaTrack->diplomaTrackSchedule->count() / 2;
+            $studentAttendance = 0;
+
+            foreach ($diplomaTrack->diplomaTrackStudent as $diplomaTrackStudent){
+                $attendanceCount = $diplomaTrackStudent->traineesAttendanceDiploma->where('attendance',1)->count();
+                if ($attendanceCount >= $half_time){
+                    $studentAttendance += 1;
+                }
+            }
+
+            $diplomaTrack->courseEarnings = $studentAttendance *  $diplomaTrack->total_cost;
+            $diplomaTrack->instractorAccounts = (($studentAttendance *  $diplomaTrack->total_cost) * $diplomaTrack->instructor_percentage) / 100;
             $data[] = $diplomaTrack;
         }
 

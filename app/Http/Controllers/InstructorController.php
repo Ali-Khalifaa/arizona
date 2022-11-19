@@ -59,7 +59,7 @@ class InstructorController extends Controller
             'phone' => 'required|unique:instructors',
             'cv' => 'required|mimes:pdf|max:10000',
             'image' => 'mimes:jpeg,jpg,png,gif|required|max:10000', // max 10000kb
-            'hour_price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+            'percentage' => 'required|regex:/^\d+(\.\d{1,2})?$/|max:100',
             'birth_date' => 'required|date',
             'has_account' => 'required',
 
@@ -137,7 +137,7 @@ class InstructorController extends Controller
             'phone' => $request->phone,
             'cv' => $cv_name,
             'img' => $image_name,
-            'hour_price' => $request->hour_price,
+            'percentage' => $request->percentage,
             'birth_date' => $request->birth_date,
             'has_account' => $has_account,
             'user_id' => $user_id
@@ -183,7 +183,7 @@ class InstructorController extends Controller
 
             'address' => 'required|string|max:100',
 
-            'hour_price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+            'percentage' => 'required|regex:/^\d+(\.\d{1,2})?$/|max:100',
             'birth_date' => 'required|date',
 
             'bank_id' => 'required|exists:banks,id',
@@ -481,8 +481,8 @@ class InstructorController extends Controller
             }
 
             $courseTrack->paiedAmount = $paiedAmount;
-            $courseTrack->hourPrice = $courseTrack->instructor->hour_price;
-            $courseTrack->courseHoursAmount = $courseTrack->instructor_hour_cost;
+            $courseTrack->presentage = $courseTrack->instructor->percentage;
+            $courseTrack->coursePercentageAmount = $courseTrack->instructor_percentage;
             $absenselecturesCourse = $courseTrack->courseTrackSchedule->where('date','<=',now())->count();
             $total_hours_dayle=0;
             $attendance_start_time =  $courseTrack->courseTrackSchedule[0]->start_time;
@@ -520,7 +520,19 @@ class InstructorController extends Controller
             $absenseHours = $total_lectures * $total_hours_dayle;
             $courseTrack->absenseHours = $absenseHours;
             $courseTrack->attendanceHours =$attendanceHours;
-            $courseTrack->attendanceHoursAmount = $attendanceHours *  $courseTrack->courseHoursAmount;
+            //student 50% lectures
+            $half_time = $courseTrack->courseTrackSchedule->count() / 2;
+            $studentAttendance = 0;
+
+            foreach ($courseTrack->courseTrackStudent as $courseTrackStudent){
+                $attendanceCount = $courseTrackStudent->traineesAttendanceCourse->where('attendance',1)->count();
+                if ($attendanceCount >= $half_time){
+                    $studentAttendance += 1;
+                }
+            }
+
+            $courseTrack->courseEarnings = $studentAttendance *  $courseTrack->total_cost;
+            $courseTrack->instractorAccounts = (($studentAttendance *  $courseTrack->total_cost) * $courseTrack->instructor_percentage) / 100;
             $data[] = $courseTrack;
         }
 
@@ -542,8 +554,8 @@ class InstructorController extends Controller
                 }
             }
             $diplomaTrack->paiedAmount = $paiedAmount;
-            $diplomaTrack->hourPrice = $diplomaTrack->instructor->hour_price;
-            $diplomaTrack->courseHoursAmount = $diplomaTrack->instructor_hour_cost;
+            $diplomaTrack->presentage = $diplomaTrack->instructor->presentage;
+            $diplomaTrack->coursePercentageAmount = $diplomaTrack->instructor_percentage;
             $absenselecturesDiploma = $diplomaTrack->diplomaTrackSchedule->where('date','<=',now())->count();
             $total_hours_dayle=0;
             $attendance_start_time =  $diplomaTrack->diplomaTrackSchedule[0]->start_time;
@@ -581,7 +593,20 @@ class InstructorController extends Controller
             $absenseHours = $total_lectures * $total_hours_dayle;
             $diplomaTrack->absenseHours = $absenseHours;
             $diplomaTrack->attendanceHours =$attendanceHours;
-            $diplomaTrack->attendanceHoursAmount = $attendanceHours *  $diplomaTrack->diplomaHoursAmount;
+
+            //student 50% lectures
+            $half_time = $diplomaTrack->diplomaTrackSchedule->count() / 2;
+            $studentAttendance = 0;
+
+            foreach ($diplomaTrack->diplomaTrackStudent as $diplomaTrackStudent){
+                $attendanceCount = $diplomaTrackStudent->traineesAttendanceDiploma->where('attendance',1)->count();
+                if ($attendanceCount >= $half_time){
+                    $studentAttendance += 1;
+                }
+            }
+
+            $diplomaTrack->courseEarnings = $studentAttendance *  $diplomaTrack->total_cost;
+            $diplomaTrack->instractorAccounts = (($studentAttendance *  $diplomaTrack->total_cost) * $diplomaTrack->instructor_percentage) / 100;
             $data[] = $diplomaTrack;
         }
 
@@ -631,13 +656,11 @@ class InstructorController extends Controller
             {
                 foreach ($course_track->courseTrackStudent as $student)
                 {
-                      $data[$index]['first_name'] = $student->lead->first_name;
+                      $data[$index]['arabic_name'] = $student->lead->arabic_name;
                       $data[$index]['id'] = $student->lead->id;
-                      $data[$index]['middle_name'] = $student->lead->middle_name;
-                      $data[$index]['last_name'] = $student->lead->last_name;
+                      $data[$index]['english_name'] = $student->lead->english_name;
                       $data[$index]['email'] = $student->lead->email;
                       $data[$index]['phone'] = $student->lead->phone;
-                      $data[$index]['mobile'] = $student->lead->mobile;
                       $data[$index]['name'] = $course_track->name;
                       $data[$index]['type'] = "course";
                       $index += 1;
@@ -654,12 +677,10 @@ class InstructorController extends Controller
                 {
                     $index += 1;
                     $data[$index]['id'] = $student->lead->id;
-                    $data[$index]['first_name'] = $student->lead->first_name;
-                    $data[$index]['middle_name'] = $student->lead->middle_name;
-                    $data[$index]['last_name'] = $student->lead->last_name;
+                    $data[$index]['arabic_name'] = $student->lead->arabic_name;
+                    $data[$index]['english_name'] = $student->lead->english_name;
                     $data[$index]['email'] = $student->lead->email;
                     $data[$index]['phone'] = $student->lead->phone;
-                    $data[$index]['mobile'] = $student->lead->mobile;
                     $data[$index]['name'] = $diploma_track->name;
                     $data[$index]['type'] = "course";
                 }

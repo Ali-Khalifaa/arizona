@@ -24,7 +24,7 @@ class CreateInstructorsTable extends Migration
             $table->string('phone');
             $table->string('cv');
             $table->string('img');
-            $table->double('hour_price',8,2);
+            $table->double('percentage',8,2);
             $table->date('birth_date');
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->boolean('has_account')->default(0);

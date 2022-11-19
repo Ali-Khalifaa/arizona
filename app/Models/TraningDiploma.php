@@ -11,7 +11,7 @@ class TraningDiploma extends Model
         'category_id',
         'vendor_id',
         'diploma_id',
-        'hour_price',
+        'percentage',
         'active_date',
     ];
 

@@ -99,8 +99,10 @@ class ClientController extends Controller
     {
         $lead = Lead::findOrFail($id);
 
-        $lead->country;
         $lead->city;
+        $lead->educationLevel;
+        $lead->specialty;
+        $lead->university;
         $lead->employee;
         $lead->interestingLevel;
         $lead->leadSources;

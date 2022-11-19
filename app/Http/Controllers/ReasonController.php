@@ -17,13 +17,11 @@ class ReasonController extends Controller
 
         foreach ($reasons as $reason)
         {
-           
             $reason->noAction = 0;
-            if($reason->leadsFollowup != null || count($reason->leadActivities) > 0) 
+            if($reason->leadsFollowup != null || count($reason->leadActivities) > 0)
             {
                 $reason->noAction = 1;
             }
-
         }
 
         return response()->json($reasons);

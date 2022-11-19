@@ -58,9 +58,8 @@ class SalesReportController extends Controller
 
                     $data[$index]['payment_date']=$date;
                     $data[$index]['student_no']=$trainees_payment->lead->id;
-                    $data[$index]['student_first_name']=$trainees_payment->lead->first_name;
-                    $data[$index]['student_middle_name']=$trainees_payment->lead->middle_name;
-                    $data[$index]['student_last_name']=$trainees_payment->lead->last_name;
+                    $data[$index]['student_first_name']=$trainees_payment->lead->arabic_name;
+                    $data[$index]['student_middle_name']=$trainees_payment->lead->english_name;
                     $data[$index]['invoice_no']=$trainees_payment->id;
                     $data[$index]['invoice_no']=$trainees_payment->id;
                     $data[$index]['product_type']=$trainees_payment->product_type;
@@ -99,9 +98,8 @@ class SalesReportController extends Controller
 
                     $data[$index]['payment_date']=$date;
                     $data[$index]['student_no']=$trainees_payment->lead->id;
-                    $data[$index]['student_first_name']=$trainees_payment->lead->first_name;
-                    $data[$index]['student_middle_name']=$trainees_payment->lead->middle_name;
-                    $data[$index]['student_last_name']=$trainees_payment->lead->last_name;
+                    $data[$index]['student_first_name']=$trainees_payment->lead->arabic_name;
+                    $data[$index]['student_middle_name']=$trainees_payment->lead->english_name;
                     $data[$index]['invoice_no']=$trainees_payment->id;
                     $data[$index]['invoice_no']=$trainees_payment->id;
                     $data[$index]['product_type']=$trainees_payment->product_type;
@@ -128,9 +126,8 @@ class SalesReportController extends Controller
 
                 $data[$index]['payment_date']=$date;
                 $data[$index]['student_no']=$trainees_payment->lead->id;
-                $data[$index]['student_first_name']=$trainees_payment->lead->first_name;
-                $data[$index]['student_middle_name']=$trainees_payment->lead->middle_name;
-                $data[$index]['student_last_name']=$trainees_payment->lead->last_name;
+                $data[$index]['student_first_name']=$trainees_payment->lead->arabic_name;
+                $data[$index]['student_middle_name']=$trainees_payment->lead->english_name;
                 $data[$index]['invoice_no']=$trainees_payment->id;
                 $data[$index]['invoice_no']=$trainees_payment->id;
                 $data[$index]['product_type']=$trainees_payment->product_type;
@@ -156,9 +153,8 @@ class SalesReportController extends Controller
 
                 $data[$index]['payment_date']=$date;
                 $data[$index]['student_no']=$trainees_payment->lead->id;
-                $data[$index]['student_first_name']=$trainees_payment->lead->first_name;
-                $data[$index]['student_middle_name']=$trainees_payment->lead->middle_name;
-                $data[$index]['student_last_name']=$trainees_payment->lead->last_name;
+                $data[$index]['student_first_name']=$trainees_payment->lead->arabic_name;
+                $data[$index]['student_middle_name']=$trainees_payment->lead->english_name;
                 $data[$index]['invoice_no']=$trainees_payment->id;
                 $data[$index]['invoice_no']=$trainees_payment->id;
                 $data[$index]['product_type']=$trainees_payment->product_type;
@@ -1191,9 +1187,8 @@ class SalesReportController extends Controller
                         $data[$index]['treasury_payment_note'] = null;
                     }
                     $data[$index]['transaction_date'] = $trainee->created_at;
-                    $data[$index]['student_first_name'] = $trainee->lead->first_name;
-                    $data[$index]['student_middle_name'] = $trainee->lead->middle_name;
-                    $data[$index]['student_last_name'] = $trainee->lead->last_name;
+                    $data[$index]['student_first_name'] = $trainee->lead->arabic_name;
+                    $data[$index]['student_middle_name'] = $trainee->lead->english_name;
                     $data[$index]['treasury_title'] = $trainee->treasury->label;
                     $data[$index]['amount'] = $trainee->amount;
                     $data[$index]['product_name'] = $trainee->product_name;
@@ -1235,9 +1230,8 @@ class SalesReportController extends Controller
                     $data[$index]['treasury_payment_note'] = null;
                 }
                 $data[$index]['transaction_date'] = $trainee->created_at;
-                $data[$index]['student_first_name'] = $trainee->lead->first_name;
-                $data[$index]['student_middle_name'] = $trainee->lead->middle_name;
-                $data[$index]['student_last_name'] = $trainee->lead->last_name;
+                $data[$index]['student_first_name'] = $trainee->lead->arabic_name;
+                $data[$index]['student_middle_name'] = $trainee->lead->english_name;
                 $data[$index]['treasury_title'] = $trainee->treasury->label;
                 $data[$index]['amount'] = $trainee->amount;
                 $data[$index]['product_name'] = $trainee->product_name;
@@ -1306,9 +1300,8 @@ class SalesReportController extends Controller
                     }
                     $data[$index]['payment_date']=$date;
                     $data[$index]['student_no']=$trainees_payment->lead->id;
-                    $data[$index]['student_first_name']=$trainees_payment->lead->first_name;
-                    $data[$index]['student_middle_name']=$trainees_payment->lead->middle_name;
-                    $data[$index]['student_last_name']=$trainees_payment->lead->last_name;
+                    $data[$index]['student_first_name']=$trainees_payment->lead->arabic_name;
+                    $data[$index]['student_middle_name']=$trainees_payment->lead->english_name;
                     $data[$index]['invoice_no']=$trainees_payment->id;
                     $data[$index]['product_type']=$trainees_payment->product_type;
                     $data[$index]['product_name']=$trainees_payment->product_name;
@@ -1353,9 +1346,8 @@ class SalesReportController extends Controller
                 }
                 $data[$index]['payment_date']=$date;
                 $data[$index]['student_no']=$trainees_payment->lead->id;
-                $data[$index]['student_first_name']=$trainees_payment->lead->first_name;
-                $data[$index]['student_middle_name']=$trainees_payment->lead->middle_name;
-                $data[$index]['student_last_name']=$trainees_payment->lead->last_name;
+                $data[$index]['student_first_name']=$trainees_payment->lead->arabic_name;
+                $data[$index]['student_middle_name']=$trainees_payment->lead->english_name;
                 $data[$index]['invoice_no']=$trainees_payment->id;
                 $data[$index]['product_type']=$trainees_payment->product_type;
                 $data[$index]['product_name']=$trainees_payment->product_name;

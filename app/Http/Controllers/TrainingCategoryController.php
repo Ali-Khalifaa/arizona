@@ -31,8 +31,8 @@ class TrainingCategoryController extends Controller
         $validator = Validator::make($request->all(), [
             'instructor_id' => 'required|exists:instructors,id',
             'category_id' => 'required|exists:categories,id',
-            'hour_price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-            'active_date' => 'required|date|unique:traning_categories',
+            'percentage' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|max:100',
+            'active_date' => 'required|date|unique:traning_categories,active_date',
         ]);
 
         if ($validator->fails()) {
@@ -72,8 +72,8 @@ class TrainingCategoryController extends Controller
         $validator = Validator::make($request->all(), [
             'instructor_id' => 'required|exists:instructors,id',
             'category_id' => 'required|exists:categories,id',
-            'hour_price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-
+            'percentage' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/|max:100',
+            'active_date' => 'required|date|unique:traning_categories,active_date,'.$id,
         ]);
 
         if ($validator->fails()) {
@@ -82,18 +82,6 @@ class TrainingCategoryController extends Controller
         }
 
         $trainingCategory = TraningCategory::findOrFail($id);
-
-        if ($trainingCategory->active_date != $request->active_date)
-        {
-            $validator = Validator::make($request->all(), [
-                'active_date' => 'required|date|unique:traning_diplomas',
-            ]);
-
-            if ($validator->fails()) {
-                $errors = $validator->errors();
-                return response()->json($errors,422);
-            }
-        }
 
         $trainingCategory->update($request->all());
 

@@ -181,10 +181,8 @@ class ProfileController extends Controller
             $lead = $user->lead;
 
             $validator = Validator::make($request->all(), [
-                'first_name' => 'required|string|max:100',
-                'middle_name' => 'required|string|max:100',
-                'last_name' => 'required|string|max:100',
-                'mobile' => 'required|regex:/(01)[0-9]{9}/|unique:leads,mobile' . ($lead->id ? ",$lead->id" : ''),
+                'arabic_name' => 'required|string|max:100',
+                'english_name' => 'required|string|max:100',
                 'phone' => 'required|unique:leads,phone' . ($lead->id ? ",$lead->id" : ''),
                 'email' => 'required|string|email|max:255|unique:leads,email' . ($lead->id ? ",$lead->id" : ''),
             ]);
