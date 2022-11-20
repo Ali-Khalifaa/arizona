@@ -21,7 +21,7 @@ class CreateDiplomaTracksTable extends Migration
             $table->bigInteger('category_id')->unsigned();
             $table->bigInteger('vendor_id')->unsigned();
 
-            $table->double("instructor_hour_cost",8,2)->default(0);
+            $table->double("instructor_percentage",8,2)->default(0);
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->date('registration_last_date');
